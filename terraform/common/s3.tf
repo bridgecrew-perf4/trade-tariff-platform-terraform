@@ -64,6 +64,6 @@ data "aws_iam_policy_document" "s3-policy" {
       "s3:RestoreObject",
     ]
 
-    resources = formatlist("%s", aws_s3_bucket.persistence.*.arn)
+    resources = formatlist("%s/*", aws_s3_bucket.persistence.*.arn)
   }
 }
