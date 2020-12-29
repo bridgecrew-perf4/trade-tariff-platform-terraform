@@ -54,6 +54,10 @@ data "aws_iam_policy_document" "s3" {
 }
 
 
+output "iam_id" {
+  value = aws_iam_access_key.service-account.id
+}
+
 output "secret" {
   value = aws_iam_access_key.service-account.secret
 }
