@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "persistence" {
 }
 
 
-resource "aws_s3_bucket_public_access_block" "example" {
+resource "aws_s3_bucket_public_access_block" "acls" {
   count  = length(aws_s3_bucket.persistence)
   bucket = aws_s3_bucket.persistence.*.id[count.index]
 
