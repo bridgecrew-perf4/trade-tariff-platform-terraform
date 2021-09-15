@@ -17,3 +17,10 @@ variable "notification_email" {
   #  default = "no-reply@trade-tariff.service.gov.uk"
   default = "trade-tariff-support@enginegroup.com"
 }
+
+
+variable "docker_repositories" {
+  type = list(string)
+  description = "List of repositories to create"
+  default = ["backend", "frontend", "dutycalculator"]
+}
