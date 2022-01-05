@@ -7,7 +7,7 @@ resource "aws_ses_domain_identity" "tariff_domain" {
 }
 
 resource "aws_ses_domain_identity_verification" "tariff-domain-verification" {
-  domain = aws_ses_domain_identity.tariff_domain.id
+  domain     = aws_ses_domain_identity.tariff_domain.id
   depends_on = [aws_route53_record.tariff_domain_verification_record]
 }
 

@@ -121,8 +121,20 @@ variable "cache_behavior" {
   default     = null
 }
 
+variable "ordered_cache_behavior" {
+  description = "An ordered list of cache behaviors resource for this distribution. List from top to bottom in order of precedence. The topmost cache behavior will have precedence 0."
+  type        = any
+  default     = []
+}
+
 variable "route53_zone_id" {
   description = "The ID of the Route53 zone where to create the Cloudfront alias CNAME records"
+  type        = string
+  default     = null
+}
+
+variable "health_check_id" {
+  description = "The health check the record should be associated with."
   type        = string
   default     = null
 }

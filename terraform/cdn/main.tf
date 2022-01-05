@@ -4,13 +4,16 @@ terraform {
 }
 
 provider "aws" {
-  alias  = "global"
   region = "us-east-1"
 }
 
 data "aws_route53_zone" "selected" {
   name         = var.base_domain_name
   private_zone = false
+}
+
+data "aws_cloudfront_cache_policy" "caching_disabled" {
+  name = "CachingDisabled"
 }
 
 module "cdn" {
@@ -46,7 +49,36 @@ module "cdn" {
       target_origin_id       = "frontend-govpaas-${var.environment_name}"
       viewer_protocol_policy = "redirect-to-https"
 
-      cache_policy_id = aws_cloudfront_cache_policy.cache_all_qsa.id
+      cache_policy_id          = data.aws_cloudfront_cache_policy.caching_disabled.id
+      origin_request_policy_id = aws_cloudfront_origin_request_policy.forward_all_qsa.id
+
+      min_ttl     = 0
+      default_ttl = 0
+      max_ttl     = 0
+
+      compress = false
+
+      allowed_methods = [
+        "GET",
+        "HEAD",
+        "OPTIONS",
+        "PUT",
+        "POST",
+        "PATCH",
+        "DELETE"
+      ]
+
+      cached_methods = [
+        "GET",
+        "HEAD"
+      ]
+    },
+    api = {
+      path_pattern           = "/api"
+      target_origin_id       = "frontend-govpaas-${var.environment_name}"
+      viewer_protocol_policy = "redirect-to-https"
+
+      cache_policy_id          = aws_cloudfront_cache_policy.cache_all_qsa.id
       origin_request_policy_id = aws_cloudfront_origin_request_policy.forward_all_qsa.id
 
       default_ttl = 0
@@ -69,8 +101,8 @@ module "cdn" {
         "HEAD"
       ]
     }
-
   }
+
   viewer_certificate = {
     ssl_support_method  = "sni-only"
     acm_certificate_arn = module.acm.aws_acm_certificate_arn
@@ -82,13 +114,9 @@ module "cdn" {
 }
 
 module "acm" {
-  providers = {
-    aws = aws.global
-  }
-
   source = "../modules/acm"
 
-  domain_name        = var.cdn_aliases[0]
-  subject_alternative_names            = slice(var.cdn_aliases, 1, length(var.cdn_aliases))
-  route53_zone_id = data.aws_route53_zone.selected.id
+  domain_name               = var.cdn_aliases[0]
+  subject_alternative_names = slice(var.cdn_aliases, 1, length(var.cdn_aliases))
+  route53_zone_id           = data.aws_route53_zone.selected.id
 }
