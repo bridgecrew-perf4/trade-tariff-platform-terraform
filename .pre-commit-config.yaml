@@ -13,3 +13,4 @@ repos:
           - --args=--disable-rule=aws_route53_record_invalid_set_identifier
           - --args=--disable-rule=aws_route53_record_invalid_type
           - --args=--disable-rule=aws_route53_record_invalid_zone_id
+      - id: terraform_providers_lock
