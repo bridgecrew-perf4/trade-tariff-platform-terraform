@@ -20,7 +20,7 @@ variable "notification_email" {
 
 
 variable "docker_repositories" {
-  type = list(string)
+  type        = list(string)
   description = "List of repositories to create"
-  default = ["backend", "frontend", "dutycalculator", "admin"]
+  default     = ["backend", "frontend", "dutycalculator", "admin"]
 }

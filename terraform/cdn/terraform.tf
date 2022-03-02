@@ -1,8 +1,5 @@
 terraform {
   backend "s3" {
-    bucket = "trade-tariff-terraform-state"
-    key    = "common"
-    region = "eu-west-2"
   }
 
   required_providers {
@@ -14,5 +11,5 @@ terraform {
 }
 
 provider "aws" {
-  region = "eu-west-2"
+  region = "us-east-1"
 }

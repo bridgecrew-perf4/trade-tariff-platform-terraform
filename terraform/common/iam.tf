@@ -99,7 +99,7 @@ output "service_iam_id" {
 }
 
 output "service_secret" {
-  value = aws_iam_access_key.service-account.secret
+  value     = aws_iam_access_key.service-account.secret
   sensitive = true
 }
 
@@ -108,6 +108,6 @@ output "ci_iam_id" {
 }
 
 output "ci_secret" {
-  value = aws_iam_access_key.service-account.secret
+  value     = aws_iam_access_key.service-account.secret
   sensitive = true
 }

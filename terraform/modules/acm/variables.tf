@@ -4,8 +4,8 @@ variable "domain_name" {
 
 variable "subject_alternative_names" {
   description = "Set of domains that should be SANs in the issued certificate."
-  type    = list(string)
-  default = []
+  type        = list(string)
+  default     = []
 }
 
 variable "route53_zone_id" {

@@ -11,7 +11,6 @@ variable "cdn_aliases" {
 variable "origin_endpoint" {
 }
 
-
 variable "base_domain_name" {
   type    = string
   default = "trade-tariff.service.gov.uk."

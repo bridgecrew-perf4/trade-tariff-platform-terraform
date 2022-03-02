@@ -1,6 +1,6 @@
 resource "aws_cloudfront_origin_request_policy" "forward_all_qsa" {
-  name        = "Forward-All-QSA-${var.environment_name}"
-  comment     = "Forward all QSA (managed by terraform)"
+  name    = "Forward-All-QSA-${var.environment_name}"
+  comment = "Forward all QSA (managed by terraform)"
   cookies_config {
     cookie_behavior = "all"
   }

@@ -9,8 +9,8 @@ resource "aws_ecr_repository" "docker" {
 }
 
 resource "aws_ecr_lifecycle_policy" "rule" {
-  count = length(var.docker_repositories)
-  repository = "tariff-${element(var.docker_repositories,count.index)}"
+  count      = length(var.docker_repositories)
+  repository = "tariff-${element(var.docker_repositories, count.index)}"
 
   policy = jsonencode(
     {

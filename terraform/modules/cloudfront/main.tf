@@ -92,15 +92,9 @@ resource "aws_cloudfront_distribution" "this" {
       default_ttl = lookup(i.value, "default_ttl", null)
       max_ttl     = lookup(i.value, "max_ttl", null)
 
-      cache_policy_id = i.value["cache_policy_id"]
+      cache_policy_id          = i.value["cache_policy_id"]
       origin_request_policy_id = i.value["origin_request_policy_id"]
 
-# TODO: Revisit after Terraform issue is fixed
-# This block should be ignored and removed from the plan  by terraform then cache_policy_id is used.
-# https://github.com/hashicorp/terraform-provider-aws/issues/17626
-
-
-      /*
       forwarded_values {
         query_string            = lookup(i.value, "query_string", false)
         query_string_cache_keys = lookup(i.value, "query_string_cache_keys", [])
@@ -111,7 +105,6 @@ resource "aws_cloudfront_distribution" "this" {
           whitelisted_names = lookup(i.value, "cookies_whitelisted_names", [])
         }
       }
-      */
 
       dynamic "lambda_function_association" {
         for_each = lookup(i.value, "lambda_function_association", [])
@@ -123,6 +116,31 @@ resource "aws_cloudfront_distribution" "this" {
           include_body = lookup(l.value, "include_body", null)
         }
       }
+    }
+  }
+
+  dynamic "ordered_cache_behavior" {
+    for_each = [for k, v in var.cache_behavior : v if k != "default"]
+    iterator = i
+
+    content {
+      path_pattern           = i.value["path_pattern"]
+      target_origin_id       = i.value["target_origin_id"]
+      viewer_protocol_policy = i.value["viewer_protocol_policy"]
+
+      allowed_methods           = lookup(i.value, "allowed_methods", ["GET", "HEAD", "OPTIONS"])
+      cached_methods            = lookup(i.value, "cached_methods", ["GET", "HEAD"])
+      compress                  = lookup(i.value, "compress", null)
+      field_level_encryption_id = lookup(i.value, "field_level_encryption_id", null)
+      smooth_streaming          = lookup(i.value, "smooth_streaming", null)
+      trusted_signers           = lookup(i.value, "trusted_signers", null)
+
+      min_ttl     = lookup(i.value, "min_ttl", null)
+      default_ttl = lookup(i.value, "default_ttl", null)
+      max_ttl     = lookup(i.value, "max_ttl", null)
+
+      cache_policy_id          = i.value["cache_policy_id"]
+      origin_request_policy_id = i.value["origin_request_policy_id"]
     }
   }
 
@@ -160,10 +178,11 @@ resource "aws_cloudfront_distribution" "this" {
 }
 
 resource "aws_route53_record" "cloudfront_record" {
-  count   = length(var.aliases)
-  name    = element(var.aliases, count.index)
-  type    = "CNAME"
-  ttl     = 60
-  records = [aws_cloudfront_distribution.this[0].domain_name]
-  zone_id = var.route53_zone_id
+  count           = length(var.aliases)
+  name            = element(var.aliases, count.index)
+  type            = "CNAME"
+  ttl             = 60
+  records         = [aws_cloudfront_distribution.this[0].domain_name]
+  zone_id         = var.route53_zone_id
+  health_check_id = var.health_check_id
 }
