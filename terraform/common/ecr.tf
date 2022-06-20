@@ -1,6 +1,6 @@
 resource "aws_ecr_repository" "docker" {
   count                = length(var.docker_repositories)
-  name                 = "tariff-${element(var.docker_repositories, count.index)}"
+  name                 = element(var.docker_repositories, count.index)
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
@@ -10,7 +10,9 @@ resource "aws_ecr_repository" "docker" {
 
 resource "aws_ecr_lifecycle_policy" "rule" {
   count      = length(var.docker_repositories)
-  repository = "tariff-${element(var.docker_repositories, count.index)}"
+  repository = element(var.docker_repositories, count.index)
+
+  depends_on = [aws_ecr_repository.docker]
 
   policy = jsonencode(
     {
