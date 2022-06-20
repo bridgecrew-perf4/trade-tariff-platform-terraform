@@ -86,9 +86,7 @@ data "aws_iam_policy_document" "ecr" {
       "ecr:PutRegistryPolicy",
     ]
 
-    resources = [
-      "arn:aws:ecr:eu-west-2:777015734912:repository/*"
-    ]
+    resources = ["*"]
   }
 }
 
