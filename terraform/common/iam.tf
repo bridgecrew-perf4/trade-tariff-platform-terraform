@@ -49,27 +49,27 @@ data "aws_iam_policy_document" "ecr" {
     sid = "VisualEditor0"
 
     actions = [
-      "ecr:PutLifecyclePolicy",
-      "ecr:PutImageTagMutability",
-      "ecr:DescribeImageScanFindings",
-      "ecr:StartImageScan",
-      "ecr:GetLifecyclePolicyPreview",
-      "ecr:GetDownloadUrlForLayer",
-      "ecr:PutImageScanningConfiguration",
-      "ecr:ListTagsForResource",
-      "ecr:InitiateLayerUpload",
-      "ecr:UploadLayerPart",
-      "ecr:ListImages",
-      "ecr:PutImage",
+      "ecr:BatchCheckLayerAvailability",
       "ecr:BatchGetImage",
       "ecr:CompleteLayerUpload",
+      "ecr:DescribeImageScanFindings",
       "ecr:DescribeImages",
-      "ecr:TagResource",
       "ecr:DescribeRepositories",
-      "ecr:StartLifecyclePolicyPreview",
-      "ecr:BatchCheckLayerAvailability",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:GetLifecyclePolicy",
+      "ecr:GetLifecyclePolicyPreview",
       "ecr:GetRepositoryPolicy",
-      "ecr:GetLifecyclePolicy"
+      "ecr:InitiateLayerUpload",
+      "ecr:ListImages",
+      "ecr:ListTagsForResource",
+      "ecr:PutImage",
+      "ecr:PutImageScanningConfiguration",
+      "ecr:PutImageTagMutability",
+      "ecr:PutLifecyclePolicy",
+      "ecr:StartImageScan",
+      "ecr:StartLifecyclePolicyPreview",
+      "ecr:TagResource",
+      "ecr:UploadLayerPart",
     ]
 
     resources = [
@@ -80,10 +80,10 @@ data "aws_iam_policy_document" "ecr" {
   statement {
     sid = "VisualEditor1"
     actions = [
-      "ecr:GetRegistryPolicy",
       "ecr:DescribeRegistry",
       "ecr:GetAuthorizationToken",
-      "ecr:PutRegistryPolicy"
+      "ecr:GetRegistryPolicy",
+      "ecr:PutRegistryPolicy",
     ]
 
     resources = [
