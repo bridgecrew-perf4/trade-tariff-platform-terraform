@@ -22,5 +22,11 @@ variable "notification_email" {
 variable "docker_repositories" {
   type        = list(string)
   description = "List of repositories to create"
-  default     = ["backend", "frontend", "dutycalculator", "admin", "trade-tariff-search-query-parser"]
+  default     = [
+    "tariff-backend",
+    "tariff-frontend",
+    "tariff-dutycalculator",
+    "tariff-admin",
+    "trade-tariff-search-query-parser",
+  ]
 }
