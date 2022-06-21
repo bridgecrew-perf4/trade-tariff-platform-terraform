@@ -27,6 +27,6 @@ variable "docker_repositories" {
     "tariff-frontend",
     "tariff-dutycalculator",
     "tariff-admin",
-    "trade-tariff-search-query-parser",
+    "tariff-search-query-parser",
   ]
 }
