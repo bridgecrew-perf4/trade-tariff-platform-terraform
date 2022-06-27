@@ -1,8 +1,10 @@
 # trade-tariff-platform
 
-The platform related code and tools that support the UK Trade Tariff service
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/trade-tariff/trade-tariff-platform/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/trade-tariff/trade-tariff-platform/tree/main)
 
-This repository contains multiple terraform projects. 
+The platform related code and tools that support the UK Trade Tariff service.
+
+This repository contains multiple terraform projects.
 
 They operate slightly differently depending on whether their resources are global or specific to a region.
 
@@ -14,6 +16,10 @@ We currently have the following projects:
 We also define shared modules under `terraform/modules` which are referenced by the different projects.
 
 - [ ] TODO: Move to configuring environments with terragrunt
+
+## Examples
+
+___
 
 ### CDN Example
 
