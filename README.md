@@ -1,53 +1,12 @@
-# trade-tariff-platform
+# trade-tariff-platform-terraform
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/trade-tariff/trade-tariff-platform/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/trade-tariff/trade-tariff-platform/tree/main)
+This repository contains multiple terraform projects that offer up terraform to terragrunt located at trade-tariff-platform-terragrunt to be deployed. At the moment the project operates as two units, the CDN and a common package which we indend to migrate into seperate modules very soon which can then be consumed correctly rather than the current legacy form.
 
-The platform related code and tools that support the UK Trade Tariff service.
-
-This repository contains multiple terraform projects.
-
-They operate slightly differently depending on whether their resources are global or specific to a region.
-
-We currently have the following projects:
-
-- `cdn` - This project is the same terraform code that creates cdn resources using different var files per environment
-- `common` - This project contains resources that are shared by all environments
-
-We also define shared modules under `terraform/modules` which are referenced by the different projects.
-
-- [ ] TODO: Move to configuring environments with terragrunt
-
-## Examples
-
-___
-
-### CDN Example
-
-```bash
-# Change into the project root
-cd terraform/cdn
-
-# Remove lingering state files
-rm -rf .terraform
-
-# Specify the environment we need to change
-export TARIFF_ENVIRONMENT=development
-
-# Initialise environment backend
-terraform init -backend-config=backends/$TARIFF_ENVIRONMENT.backend
-
-# Run a plan using the correct environment variables file
-terraform plan -var-file=vars/$TARIFF_ENVIRONMENT.tfvars
-
-# Run an apply using the correct environment variables file
-terraform apply -var-file=vars/$TARIFF_ENVIRONMENT.tfvars
+An outline of this project is below:
+```
+terraform/
+├── cdn # This is used to create our cdn resources
+├── common # This is used to create commonly used resources
 ```
 
-### Common Example
-
-```bash
-cd terraform/common # Change into the project root
-terraform init      # Initialise backend
-terraform plan      # Run a plan
-terraform apply     # Run an apply
-```
+Our modules which previously sat in this repository have been moved out to trade-tariff-platform-terraform-modules

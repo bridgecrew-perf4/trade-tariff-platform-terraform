@@ -1,3 +1,0 @@
-bucket = "trade-tariff-terraform-state"
-key    = "cdn/production"
-region = "eu-west-2"

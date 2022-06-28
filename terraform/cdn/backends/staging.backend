@@ -1,3 +1,0 @@
-bucket = "trade-tariff-terraform-state"
-key    = "cdn/staging"
-region = "eu-west-2"

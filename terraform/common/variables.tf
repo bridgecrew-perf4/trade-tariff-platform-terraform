@@ -5,7 +5,7 @@ variable "project-key" {
 }
 
 
-variable "environments" {
+variable "environment" {
   type        = list(any)
   description = "list of environment name keys to use in environment interpolations"
   default     = ["development", "staging", "production"]
