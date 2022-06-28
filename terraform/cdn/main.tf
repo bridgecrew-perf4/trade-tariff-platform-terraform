@@ -4,7 +4,7 @@ data "aws_route53_zone" "selected" {
 }
 
 module "cdn" {
-  source = "../modules/cloudfront"
+  source = "git@github.com:trade-tariff/trade-tariff-platform-terraform-modules.git//aws/cloudfront?ref=main"
 
   aliases         = var.cdn_aliases
   route53_zone_id = data.aws_route53_zone.selected.id
@@ -73,7 +73,7 @@ module "cdn" {
 }
 
 module "acm" {
-  source = "../modules/acm"
+  source = "git@github.com:trade-tariff/trade-tariff-platform-terraform-modules.git//aws/acm?ref=main"
 
   domain_name               = var.cdn_aliases[0]
   subject_alternative_names = slice(var.cdn_aliases, 1, length(var.cdn_aliases))
